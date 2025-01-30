@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Product.App.Data\Product.App.Data.csproj" />
+    <ProjectReference Include="..\Product.App.Domain\Product.App.Domain.csproj" />
+    <ProjectReference Include="..\Product.App.Infrastructure\Product.App.Infrastructure.csproj" />
+    <ProjectReference Include="..\Product.App.Service\Product.App.Service.csproj" />
+  </ItemGroup>
+
+</Project>
