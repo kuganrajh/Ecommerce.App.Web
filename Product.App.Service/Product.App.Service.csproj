@@ -5,4 +5,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="EasyNetQ" Version="7.8.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Product.App.Domain\Product.App.Domain.csproj" />
+    <ProjectReference Include="..\Product.App.Infrastructure\Product.App.Infrastructure.csproj" />
+    <ProjectReference Include="..\Shared.RabbitMQ.Models\Shared.RabbitMQ.Models.csproj" />
+  </ItemGroup>
+
 </Project>

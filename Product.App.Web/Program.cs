@@ -1,10 +1,14 @@
+using EasyNetQ;
 using Microsoft.EntityFrameworkCore;
 using Product.App.BLL;
 using Product.App.Data.Context;
 using Product.App.Data.Repositories;
 using Product.App.Domain;
 using Product.App.Infrastructure.Interface;
+using Product.App.Service;
+using Product.App.Web.AutoMapper;
 using Serilog;
+using Shared.RabbitMQ.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,13 +43,27 @@ builder.Services.AddControllers()
 builder.Services.AddDbContext<ProductDBContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("SQLProductDBConnection")));
 
+// Register EasyNetQ IBus as a singleton
+builder.Services.AddSingleton<IBus>(sp =>
+    RabbitHutch.CreateBus(builder.Configuration.GetConnectionString("RabbitMQConnection")));
+
+// Register AutoMapper and scan for profiles automatically
+builder.Services.AddAutoMapper(typeof(ProductProfile));
+
 
 // Register services and repositories for Dependency Injection
 builder.Services.AddScoped<IRepository<ProductItem>, ProductRepository>();
 builder.Services.AddScoped<IService<ProductItem>, ProductService>();
+builder.Services.AddSingleton<IRabbitMQService<ProductUpdatedMessage>, RabbitMQService>();
+
+
 
 
 var app = builder.Build();
+
+// Start consuming messages when the app starts
+var rabbitService = app.Services.GetRequiredService<IRabbitMQService<ProductUpdatedMessage>>();
+rabbitService.SubscribeToMessages();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

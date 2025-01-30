@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Product.App.Data\Product.App.Data.csproj" />
     <ProjectReference Include="..\Product.App.Domain\Product.App.Domain.csproj" />
     <ProjectReference Include="..\Product.App.Infrastructure\Product.App.Infrastructure.csproj" />
