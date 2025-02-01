@@ -20,13 +20,13 @@ namespace Product.App.Web.Controllers
 
         // GET: api/Product
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
             _logger.LogInformation("GetAll method invoked");
             try
             {
                 _logger.LogDebug("Fetching all products from the service.");
-                var products = _productService.Get();
+                var products = await _productService.GetAsync();
 
                 if (products == null || !products.Any())
                 {

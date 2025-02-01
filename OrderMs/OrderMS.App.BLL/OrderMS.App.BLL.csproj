@@ -6,4 +6,16 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OrderMS.App.Data\OrderMS.App.Data.csproj" />
+    <ProjectReference Include="..\OrderMS.App.Domain\OrderMS.App.Domain.csproj" />
+    <ProjectReference Include="..\OrderMS.App.Helper\OrderMS.App.Helper.csproj" />
+    <ProjectReference Include="..\OrderMS.App.Infrastructure\OrderMS.App.Infrastructure.csproj" />
+    <ProjectReference Include="..\OrderMS.App.Service\OrderMS.App.Service.csproj" />
+  </ItemGroup>
+
 </Project>

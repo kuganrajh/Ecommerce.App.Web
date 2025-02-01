@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -7,11 +7,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="HotChocolate.AspNetCore" Version="14.3.0" />
+    <PackageReference Include="HotChocolate.Data" Version="14.3.0" />
+    <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.46.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Cosmos" Version="9.0.1" />
+    <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="EasyNetQ" Version="7.8.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\..\Shared.RabbitMQ.Models\Shared.RabbitMQ.Models.csproj" />
+    <ProjectReference Include="..\OrderMS.App.BLL\OrderMS.App.BLL.csproj" />
+    <ProjectReference Include="..\OrderMS.App.Data\OrderMS.App.Data.csproj" />
+    <ProjectReference Include="..\OrderMS.App.Domain\OrderMS.App.Domain.csproj" />
+    <ProjectReference Include="..\OrderMS.App.Helper\OrderMS.App.Helper.csproj" />
+    <ProjectReference Include="..\OrderMS.App.Infrastructure\OrderMS.App.Infrastructure.csproj" />
+    <ProjectReference Include="..\OrderMS.App.Service\OrderMS.App.Service.csproj" />
   </ItemGroup>
 
 </Project>

@@ -35,9 +35,9 @@ namespace Product.App.BLL
         /// Get all products from the repository.
         /// </summary>
         /// <returns>List of all products.</returns>
-        public List<ProductItem> Get()
+        public Task<List<ProductItem>> GetAsync()
         {
-            var listData = _productRepository.Get();
+            var listData = _productRepository.GetAsync();
             return listData;
         }
 

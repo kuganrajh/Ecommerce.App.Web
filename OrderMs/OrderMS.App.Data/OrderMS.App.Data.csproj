@@ -6,4 +6,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.46.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Cosmos" Version="9.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OrderMS.App.Domain\OrderMS.App.Domain.csproj" />
+    <ProjectReference Include="..\OrderMS.App.Infrastructure\OrderMS.App.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

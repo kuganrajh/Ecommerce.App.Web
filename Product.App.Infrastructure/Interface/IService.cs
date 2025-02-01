@@ -8,7 +8,7 @@ namespace Product.App.Infrastructure.Interface
 {
     public interface IService<T>
     {
-        List<T> Get();
+        Task<List<T>> GetAsync();
         Task<T> GetAsync(Guid id);
         Task<T> CreateAsync(T model);
         Task<T> UpdateAsync(T model);

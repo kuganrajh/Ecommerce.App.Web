@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Product.App.Infrastructure.Interface
+namespace OrderMS.App.Infrastructure.Interface
 {
     public interface IRepository<T>
     {
