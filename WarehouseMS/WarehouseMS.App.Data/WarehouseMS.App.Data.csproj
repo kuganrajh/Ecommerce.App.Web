@@ -7,11 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Messaging.ServiceBus" Version="7.18.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\OrderMS.App.Infrastructure\OrderMS.App.Infrastructure.csproj" />
+    <PackageReference Include="MongoDB.Driver" Version="3.1.0" />
   </ItemGroup>
 
 </Project>

@@ -18,6 +18,7 @@ namespace OrderMS.App.BLL
         private readonly IRepository<Order> _orderRepository;
         // private readonly IRabbitMQService<OrderUpdatedMessage> _rabbitMQService;
         //private readonly IMapper _mapper;
+        private readonly IEventBus _eventBus;
 
         /// <summary>
         /// Initializes a new instance of the OrderService class.
@@ -59,10 +60,13 @@ namespace OrderMS.App.BLL
         {
             var data = await _orderRepository.CreateAsync(order);
 
-            // AutoMapper mapping
-            // var orderUpdatedMessage = _mapper.Map<OrderUpdatedMessage>(data);
-            // orderUpdatedMessage.EventType = EventType.Create;
-            // _rabbitMQService.PublishMessage(orderUpdatedMessage);
+            await _eventBus.PublishAsync(new
+            {
+                OrderId = data.Id,
+                CustomerId = data.CustomerId,
+                TotalAmount = data.TotalAmount,
+                CreatedDate = DateTime.UtcNow,
+            }, "ordercreatedtopic");
 
             return data;
         }
@@ -76,10 +80,13 @@ namespace OrderMS.App.BLL
         {
             var data = await _orderRepository.UpdateAsync(order);
 
-            // AutoMapper mapping
-            // var orderUpdatedMessage = _mapper.Map<OrderUpdatedMessage>(data);
-            // orderUpdatedMessage.EventType = EventType.Update;
-            // _rabbitMQService.PublishMessage(orderUpdatedMessage);
+            await _eventBus.PublishAsync(new
+            {
+                OrderId = data.Id,
+                CustomerId = data.CustomerId,
+                TotalAmount = data.TotalAmount,
+                CreatedDate = DateTime.UtcNow,
+            }, "orderupdatedtopic");
 
             return data;
         }
@@ -93,9 +100,11 @@ namespace OrderMS.App.BLL
         {
             bool data = await _orderRepository.DeleteAsync(id);
 
-            // AutoMapper mapping
-            // var orderUpdatedMessage = new OrderUpdatedMessage() { OrderId = id, EventType = EventType.Delete };
-            // _rabbitMQService.PublishMessage(orderUpdatedMessage);
+            await _eventBus.PublishAsync(new
+            {
+                OrderId = id,                
+                CreatedDate = DateTime.UtcNow
+            }, "orderdeletedtopic");
 
             return data;
         }

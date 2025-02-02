@@ -12,6 +12,8 @@ using OrderMS.App.Web.QueueHandler;
 using Serilog;
 using HotChocolate.Data;
 using OrderMS.App.Web.GraphQL.Types;
+using Azure.Messaging.ServiceBus;
+using OrderMS.App.Service;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,12 +34,12 @@ Log.Logger = new LoggerConfiguration()
 builder.Host.UseSerilog(Log.Logger);
 
 
-builder.Services.AddDbContext<OrderDbContext>(options =>
-    options.UseCosmos(
-        builder.Configuration["CosmosDbConnection:AccountEndpoint"],
-        builder.Configuration["CosmosDbConnection:AccountKey"],
-        builder.Configuration["CosmosDbConnection:DatabaseName"]
-    ));
+//builder.Services.AddDbContext<OrderDbContext>(options =>
+//    options.UseCosmos(
+//        builder.Configuration["CosmosDbConnection:AccountEndpoint"],
+//        builder.Configuration["CosmosDbConnection:AccountKey"],
+//        builder.Configuration["CosmosDbConnection:DatabaseName"]
+//    ));
 
 builder.Services.AddGraphQLServer()
     .AddQueryType<OrderQuery>()
@@ -47,10 +49,21 @@ builder.Services.AddGraphQLServer()
     .AddFiltering();
 
 // Register services and repositories for Dependency Injection
-builder.Services.AddScoped<IRepository<Order>, OrderRepository>();
 builder.Services.AddScoped<IService<Order>, OrderService>();
-builder.Services.AddScoped<IRepository<ProductItem>, ProductItemRepository>();
 builder.Services.AddScoped<IService<ProductItem>, ProductItemService>();
+builder.Services.AddSingleton<IRepository<Order>, InMemoryOrderRepository>();
+builder.Services.AddSingleton<IRepository<ProductItem>, InMemoryProductItemRepository>();
+
+// need to enable once we enable the cosmos connection 
+//builder.Services.AddScoped<IRepository<Order>, OrderRepository>();
+//builder.Services.AddScoped<IRepository<ProductItem>, ProductItemRepository>();
+
+
+builder.Services.AddSingleton<ServiceBusClient>(sp =>
+    new ServiceBusClient(builder.Configuration["AzureServiceBus:ConnectionString"])
+);
+builder.Services.AddSingleton<OrderMS.App.Infrastructure.Interface.IEventBus, AzureEventBus>();
+
 
 // Register EasyNetQ IBus as a singleton
 builder.Services.AddSingleton<IBus>(sp =>
@@ -63,11 +76,11 @@ builder.Services.AddHostedService<ProductUpdatedMessageHandlerService>();
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var dbContext = scope.ServiceProvider.GetRequiredService<OrderDbContext>();
-    await dbContext.Database.EnsureCreatedAsync();  // This will create the database & container if they don't exist    
-}
+//using (var scope = app.Services.CreateScope())
+//{
+//    var dbContext = scope.ServiceProvider.GetRequiredService<OrderDbContext>();
+//    await dbContext.Database.EnsureCreatedAsync();  // This will create the database & container if they don't exist    
+//}
 
 app.UseRouting();
 app.UseAuthorization();
