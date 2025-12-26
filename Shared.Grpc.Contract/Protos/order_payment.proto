@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option csharp_namespace = "Shared.Grpc.Contract.V1";
+
+package payments.v1;
+
+service PaymentService {
+  rpc IsOrderPaid (IsOrderPaidRequest) returns (IsOrderPaidResponse);
+}
+
+
+message IsOrderPaidRequest {
+  string order_id = 1;
+  string customer_id = 2;
+}
+
+message IsOrderPaidResponse {
+  bool is_paid = 1;
+  string payment_id = 2;
+  string status = 3;
+}

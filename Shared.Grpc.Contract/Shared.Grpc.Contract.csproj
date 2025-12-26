@@ -8,18 +8,15 @@
 
   <ItemGroup>
     <PackageReference Include="Google.Protobuf" Version="3.33.2" />
-    <PackageReference Include="Grpc.Core" Version="2.46.6" />
-    <PackageReference Include="Grpc.Core.Api" Version="2.76.0" />
-    <PackageReference Include="Grpc.Net.Client" Version="2.76.0" />
     <PackageReference Include="Grpc.Tools" Version="2.76.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>   
+    </PackageReference>
+    <PackageReference Include="Grpc.Core.Api" Version="2.76.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Shared.Grpc.Contract\Shared.Grpc.Contract.csproj" />
-    <ProjectReference Include="..\WarehouseMS.App.Infrastructure\WarehouseMS.App.Infrastructure.csproj" />
+    <Protobuf Include="Protos\**\*.proto" />
   </ItemGroup>
-  
+
 </Project>
