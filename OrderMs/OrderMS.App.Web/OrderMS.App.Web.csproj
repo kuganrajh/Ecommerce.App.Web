@@ -19,7 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Shared.RabbitMQ.Models\Shared.RabbitMQ.Models.csproj" />
     <ProjectReference Include="..\OrderMS.App.BLL\OrderMS.App.BLL.csproj" />
     <ProjectReference Include="..\OrderMS.App.Data\OrderMS.App.Data.csproj" />
     <ProjectReference Include="..\OrderMS.App.Domain\OrderMS.App.Domain.csproj" />
